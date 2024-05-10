@@ -9,7 +9,7 @@ from googleapiclient.errors import HttpError
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 
-def read(spreadsheetId, spreadsheetName, columnRange):
+def execute(spreadsheetId, spreadsheetName, columnRange):
     """Shows basic usage of the Sheets API.
     Prints values from a sample spreadsheet.
     """
