@@ -1,8 +1,5 @@
-import os
-
 class Config:
-    SPREADSHEETID = os.environ.get('SPREADSHEETID')
-    SPREADSHEETNAME = os.environ.get('SPREADSHEETNAME')
-    COLUMNRANGE = os.environ.get('COLUMNRANGE')
-
-
+    def __init__(self, spreadsheet_id, spreadsheet_name, column_range):
+        self.SPREADSHEETID = spreadsheet_id
+        self.SPREADSHEETNAME = spreadsheet_name
+        self.COLUMNRANGE = column_range

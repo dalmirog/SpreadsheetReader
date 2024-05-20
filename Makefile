@@ -1,10 +1,7 @@
-build:
-	docker build -t dalmirog/spreadsheetreader:latest .
-run:
-	docker run -p 80:80 \
-           -e SPREADSHEETID="1DV-eajMmYxksh1JFdn-LJQ_y8RgdbFBh_-u-vF1hVXA" \
-           -e SPREADSHEETNAME="Data" \
-           -e COLUMNRANGE="A2:C" \ 
-           dalmirog/spreadsheetreader:latest
+.PHONY: check_dependencies run
 
-		# TODO move this to local environment variables 
+check_dependencies:
+	pip3 install --no-cache-dir -r requirements.txt
+
+run: check_dependencies
+	python3 run.py
