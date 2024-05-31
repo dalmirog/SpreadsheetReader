@@ -1,4 +1,3 @@
-import logging
 import seqlog
 
 def configure_logging():
