@@ -1,3 +1,6 @@
 credentials.json
 token.json
+config.json
 __pycache__
+temp
+.DS_Store

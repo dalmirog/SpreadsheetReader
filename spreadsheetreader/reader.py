@@ -9,13 +9,14 @@ class Reader:
         self.columnRange = columnRange
 
     def execute(self):
-        
+
         """Shows basic usage of the Sheets API.
         Prints values from a sample spreadsheet.
         """
         # The ID and range of a sample spreadsheet.
         SAMPLE_SPREADSHEET_ID = self.spreadsheetId
-        SAMPLE_RANGE_NAME = f"{self.spreadsheetName}!{self.columnRange}"
+        SAMPLE_RANGE_NAME = f"{self.spreadsheetName}!{self.columnRange}" # TODO Remove column range option and instead go with A:Z.
+        # TODO Create a class that dinamically creates json objects based on A1 as header names and then the rest as data
 
         creds = getCreds()
 
@@ -34,6 +35,6 @@ class Reader:
             if not values:
                 print("No data found.")
                 return
-            return values
+            return values[1:]
         except HttpError as err:
             print(err)
