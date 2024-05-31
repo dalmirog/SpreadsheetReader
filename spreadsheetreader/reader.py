@@ -3,10 +3,10 @@ from googleapiclient.errors import HttpError
 from .authentication import getCreds
 
 class Reader:
-    def __init__(self, spreadsheetId, spreadsheetName, columnRange):
+    def __init__(self, spreadsheetId, spreadsheetName):
         self.spreadsheetId = spreadsheetId
         self.spreadsheetName = spreadsheetName
-        self.columnRange = columnRange
+        self.columnRange = "A:Z"
 
     def execute(self):
 

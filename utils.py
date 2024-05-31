@@ -14,8 +14,7 @@ def parse_config_file(file_path):
         # Create an instance of Config
         config_instance = Config(
             config_data['SPREADSHEETID'],
-            config_data['SPREADSHEETNAME'],
-            config_data['COLUMNRANGE']
+            config_data['SPREADSHEETNAME']
         )
         
         return config_instance
