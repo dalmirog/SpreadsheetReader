@@ -1,6 +1,9 @@
 import logging
 from api import app
 from utils import parse_config_file, check_credentials
+from logging_config import configure_logging
+
+configure_logging()
 
 # Configure the logging
 logging.basicConfig(level=logging.INFO,  # Set the logging level
