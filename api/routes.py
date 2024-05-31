@@ -2,9 +2,12 @@ from flask import jsonify, request
 from api import app, result_formatter
 from spreadsheetreader import Reader
 from .utils import create_messages_from_raw_values
+import logging
 
 @app.route('/messages', methods=['GET'])
 def home():
+    logger = logging.getLogger(__name__)  # Create a logger
+    logger.info("Received a GET request.")
     split_results = request.args.get('splitresults', default='false').lower() == 'true'
     
     reader = Reader(
