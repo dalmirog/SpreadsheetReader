@@ -1,7 +1,5 @@
 import logging
-import logging.config
 import seqlog
-import colorlog
 
 def configure_logging():
     # Initialize logging handlers
@@ -82,5 +80,3 @@ def configure_logging():
             }
         }
     })
-
-configure_logging()
