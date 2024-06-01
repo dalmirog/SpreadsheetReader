@@ -2,18 +2,15 @@ from flask import jsonify, request
 from api import app, result_formatter
 from spreadsheetreader import Reader
 from .utils import create_messages_from_raw_values
-import logging
 
 @app.route('/messages', methods=['GET'])
 def home():
-    logger = logging.getLogger(__name__)  # Create a logger
-    logger.info("Received a GET request.")
     split_results = request.args.get('splitresults', default='false').lower() == 'true'
     
     reader = Reader(
-        spreadsheetId=app.config['SPREADSHEETID'],
-        spreadsheetName=app.config['SPREADSHEETNAME']
-    )  # TODO Reader should be created using dependency injection
+        spreadsheet_id=app.config['SPREADSHEETID'],
+        spreadsheet_name=app.config['SPREADSHEETNAME']
+    )
 
     raw_values = reader.execute()
     messages = create_messages_from_raw_values(raw_values)
