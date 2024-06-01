@@ -1,36 +1,63 @@
+import logging
+import logging.config
 import seqlog
 import colorlog
 
 def configure_logging():
-    seqlog.configure_from_dict({
+    # Initialize logging handlers
+    handlers = {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'colored',
+            'level': 'INFO',
+            'stream': 'ext://sys.stdout',
+        }
+    }
+    
+    try:
+        # Try to configure Seq logging
+        seqlog.configure_from_dict({
+            'version': 1,
+            'handlers': {
+                'seq': {
+                    'class': 'seqlog.structured_logging.SeqLogHandler',
+                    'formatter': 'plain',
+                    'server_url': 'http://localhost:5341',
+                    'api_key': '',
+                    'batch_size': 10,
+                    'auto_flush_timeout': 10,
+                    'level': 'INFO',
+                }
+            },
+            'loggers': {
+                '': {
+                    'level': 'INFO',
+                    'handlers': ['seq', 'console'],
+                },
+            },
+            'formatters': {
+                'plain': {
+                    'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+                }
+            }
+        })
+        # If successful, add Seq handler to the list of handlers
+        handlers['seq'] = seqlog.get_logger().handlers[0]
+    except Exception as e:
+        # Log the exception and continue with console logging
+        logging.error(f"Error configuring Seq logging: {e}")
+    
+    # Configure logging using the defined handlers
+    logging.config.dictConfig({
         'version': 1,
-        'handlers': {
-            'seq': {
-                'class': 'seqlog.structured_logging.SeqLogHandler',
-                'formatter': 'plain',
-                'server_url': 'http://localhost:5341',
-                'api_key': '',
-                'batch_size': 10,
-                'auto_flush_timeout': 10,
-                'level': 'INFO',
-            },
-            'console': {
-                'class': 'logging.StreamHandler',
-                'formatter': 'colored',
-                'level': 'INFO',
-                'stream': 'ext://sys.stdout',
-            },
-        },
+        'handlers': handlers,
         'loggers': {
             '': {
-                'level': 'INFO',
-                'handlers': ['seq', 'console'],
+                'level': 'ERROR',  # Set the root logger level to ERROR
+                'handlers': list(handlers.keys()),  # Use all defined handlers
             },
         },
         'formatters': {
-            'plain': {
-                'format': '%(asctime)s - %(name)s - %(levelname)s - %(message)s',
-            },
             'colored': {
                 '()': 'colorlog.ColoredFormatter',
                 'format': '%(asctime)s - %(name)s - %(log_color)s%(levelname)s%(reset)s - %(message)s',
@@ -52,6 +79,8 @@ def configure_logging():
                 },
                 'reset': True,
                 'style': '%'
-            },
-        },
+            }
+        }
     })
+
+configure_logging()

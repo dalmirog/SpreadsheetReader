@@ -5,14 +5,6 @@ from logging_config import configure_logging
 
 configure_logging()
 
-# Configure the logging
-logging.basicConfig(level=logging.INFO,  # Set the logging level
-                    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',  # Define the log message format
-                    handlers=[
-                        # logging.FileHandler('app.log'),  # Log to a file
-                        logging.StreamHandler()  # Also log to the console
-                    ])
-
 logger = logging.getLogger(__name__)  # Create a logger
 
 # Check credentials
