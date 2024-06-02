@@ -5,15 +5,13 @@ from logging_config import configure_logging
 
 configure_logging()
 
-logger = logging.getLogger(__name__)  # Create a logger
+logger = logging.getLogger(__name__)
 
-# Check credentials
 if check_credentials():
     logger.info("Credentials file exists.")
 else:
     logger.warning("Credentials file does not exist.")
 
-# Parse configuration file
 config = parse_config_file('config.json')	
 
 if __name__ == '__main__':
