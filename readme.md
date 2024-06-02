@@ -39,6 +39,14 @@ Follow these steps to get started with SpreadsheetReader:
     python run.py
     ```
 
+## Testing the App
+
+Run the following command:
+
+```bash
+curl http://localhost/messages
+```
+
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
