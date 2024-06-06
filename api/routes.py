@@ -15,6 +15,8 @@ def home():
     raw_values = reader.execute()
     messages = create_messages_from_raw_values(raw_values)
 
+    return jsonify(messages), 200
+
     if split_results:
         messages_dict = result_formatter.to_dict(messages)
         return jsonify(messages_dict), 200

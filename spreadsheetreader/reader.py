@@ -24,6 +24,6 @@ class Reader:
             if not values:
                 print("No data found.")
                 return
-            return values[1:]
+            return values
         except HttpError as err:
             print(err)
