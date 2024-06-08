@@ -1,15 +1,21 @@
 from flask import jsonify, request
-from api import app, result_formatter
+from api import app
 from spreadsheetreader import Reader
 from .utils import create_messages_from_raw_values
 
 @app.route('/messages', methods=['GET'])
 def home():
-    split_results = request.args.get('splitresults', default='false').lower() == 'true'
-    
+    # Extracting values from the query string
+    spreadsheet_id = request.args.get('spreadsheet_id')
+    spreadsheet_name = request.args.get('spreadsheet_name')
+
+    # Ensure spreadsheet_id and spreadsheet_name are provided
+    if not spreadsheet_id or not spreadsheet_name:
+        return jsonify({"error": "spreadsheet_id and spreadsheet_name are required"}), 400
+
     reader = Reader(
-        spreadsheet_id=app.config['SPREADSHEETID'],
-        spreadsheet_name=app.config['SPREADSHEETNAME']
+        spreadsheet_id=spreadsheet_id,
+        spreadsheet_name=spreadsheet_name
     )
 
     raw_values = reader.execute()
@@ -17,8 +23,5 @@ def home():
 
     return jsonify(messages), 200
 
-    if split_results:
-        messages_dict = result_formatter.to_dict(messages)
-        return jsonify(messages_dict), 200
-    single_line_messages = result_formatter.single_line(messages)
-    return jsonify(single_line_messages), 200
+if __name__ == '__main__':
+    app.run(debug=True)
